@@ -18,6 +18,11 @@ jobs:
             docker-compose up -d
             docker exec tabisora_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
       - run:
+          name: Setup database
+          command: |
+           docker-compose exec tabisora rake db:create
+           docker-compose exec tabisora rake db:schema:load
+      - run:
           name: Run rspec
           command: docker-compose exec tabisora rspec
 
