@@ -1,52 +1,29 @@
 version: 2.1
-
-orbs:
-  ruby: circleci/ruby@1.0
-  node: circleci/node@2
-  heroku: circleci/heroku@1.1.0
-
-# setupでまとめる
-commands:
-  setup:
+jobs:
+  rspec:
+    working_directory: ~/tabisora
+    docker:
+      - image: circleci/ruby:2.7.2
     steps:
       - checkout
-      - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
-
-jobs:
-  build:
-    docker:
-      - image: circleci/ruby:2.7.2
-    steps:
-      - setup
-  test:
-    docker:
-      - image: circleci/ruby:2.7.2
-      - image: circleci/postgres
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: tabisora_test
-          POSTGRES_PASSWORD: password
-    environment:
-      BUNDLE_JOBS: "4"
-      BUNDLE_RETRY: "3"
-      PGHOST: 127.0.0.1
-      PGUSER: postgres
-      PGPASSWORD: password
-      RAILS_ENV: test
-    steps:
-      - setup
+      - setup_remote_docker
       - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+          name: Setup environment variable
+          command: |
+            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
       - run:
-          name: Database setup
-          command: bundle exec rails db:schema:load --trace
+          name: Start containers and verify it is working
+          command: |
+            set -x
+            docker-compose up -d
+            docker exec tabisora_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
       - run:
-          name: Rspec
-          command: bundle exec rspec
+          name: Setup database
+          command: |
+           docker-compose exec tabisora rake db:schema:load
+      - run:
+          name: Run rspec
+          command: docker-compose exec tabisora rspec
 
   rubocop:
     working_directory: ~/tabisora
@@ -71,31 +48,47 @@ jobs:
           paths:
             - vendor/bundle
 
-  deploy:
-    executor: heroku/default
+  heroku_deploy:
+    working_directory: ~/tabisora
+    docker:
+      - image: sue445/heroku-cli
     steps:
       - checkout
-      - heroku/install
-      - heroku/deploy-via-git:
-          maintenance-mode: true
+      - build-tools/install-ci-tools
+      - jq/install
       - run:
-          name: DB migrate
-          command: heroku run rails db:migrate --app $HEROKU_APP_NAME
+          name: Identify who I am
+          command: echo 'export MY_EMAIL=`heroku auth:whoami | tail -n 1`' >> $BASH_ENV
+      - run:
+          name: Identify Heroku app names to destroy
+          command: echo 'export APP_NAMES_TO_REMOVE=`heroku apps --json | jq -r "map(select(.owner.email == "\"$MY_EMAIL\"" and (.name | contains(\"potepanec\")))) | sort_by(.updated_at) | reverse | .[5:] | .[].name"`' >> $BASH_ENV
+      - run:
+          name: Delete old apps if needed
+          command: for app_name in $APP_NAMES_TO_REMOVE; do heroku apps:destroy -a $app_name -c $app_name; done
+      - run:
+          name: Define Heroku app name to create
+          command: timestamp=`date +%Y%m%d%H%M%S` && echo "export HEROKU_APP_NAME=tabisora-$timestamp" >> $BASH_ENV
+      - run:
+          name: Create fresh Heroku app
+          command: heroku apps:create $HEROKU_APP_NAME --addons=jawsdb:kitefin
+      - run:
+          name: Deploy
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+      - run:
+          name: Run post-deploy tasks
+          command: |
+            heroku run bin/rails db:migrate
 
+orbs:
+  build-tools: circleci/build-tools@2.7.1
+  jq: circleci/jq@2.2.0
 workflows:
-  version: 2
-  test_and_deploy:
+  version: 2.1
+  build:
     jobs:
-      - build
-      - test:
+      - rspec
+      - rubocop
+      - heroku_deploy:
           requires:
-            - build
-      - rubocop:
-          requires:
-            - build
-            - test
-      - deploy:
-          requires:
-            - build
-            - test
+            - rspec
             - rubocop
