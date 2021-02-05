@@ -3,7 +3,7 @@ jobs:
   rspec:
     working_directory: ~/tabisora
     docker:
-      - image: circleci/ruby
+      - image: circleci/ruby:2.7.2
     steps:
       - checkout
       - setup_remote_docker
@@ -24,7 +24,7 @@ jobs:
   rubocop:
     working_directory: ~/tabisora
     docker:
-      - image: circleci/ruby
+      - image: circleci/ruby:2.7.2
     steps:
       - checkout
       - restore_cache:
