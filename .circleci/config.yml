@@ -90,10 +90,12 @@ workflows:
       - test:
           requires:
             - build
+      - rubocop:
+          requires:
+            - build
+            - test
       - deploy:
           requires:
             - build
             - test
-          filters:
-            branches:
-              only: master
+            - rubocop
