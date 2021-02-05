@@ -4,6 +4,16 @@ jobs:
     working_directory: ~/tabisora
     docker:
       - image: circleci/ruby:2.7.2
+      - image: circleci/postgres
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: tabisora_test
+          POSTGRES_PASSWORD: password
+    environment:
+      PGHOST: 127.0.0.1
+      PGUSER: postgres
+      PGPASSWORD: passowrd
+      RAILS_ENV: test
     steps:
       - checkout
       - setup_remote_docker
