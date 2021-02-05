@@ -1,35 +1,19 @@
-version: "3"
-
+version: "3.9"
 services:
-  mysql:
-    image: mysql:8.0
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
     environment:
-      MYSQL_ROOT_PASSWORD: password
-    networks:
-      - default
-    ports:
-      - '33306:3306'
-  redis:
-    image: redis:alpine
-    networks:
-      - default
-    ports:
-      - '36379:6379'
+      POSTGRES_PASSWORD: password
   tabisora:
     build:
       context: .
       dockerfile: Dockerfile.ci
-    container_name: tabisora_app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/tabisora
     ports:
-      - '3000:3000'
-    environment:
-      MYSQL_USERNAME: root
-      MYSQL_PASSWORD: password
-      MYSQL_HOST: mysql
-      REDIS_URL: "redis://redis:6379"
+      - "3000:3000"
     depends_on:
-      - mysql
-      - redis
-    networks:
-      - default
-    command: bundle exec rails server -b 0.0.0.0
+      - db
