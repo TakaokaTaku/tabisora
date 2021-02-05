@@ -20,7 +20,6 @@ jobs:
       - run:
           name: Setup database
           command: |
-           docker-compose exec tabisora rake db:create
            docker-compose exec tabisora rake db:schema:load
       - run:
           name: Run rspec

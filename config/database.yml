@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
+  host: <%= ENV['PGHOST'] || 'db' %>
   username: postgres
   password: password
   pool: 5
