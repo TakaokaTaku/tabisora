@@ -18,23 +18,23 @@ commands:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.3-node
+      - image: circleci/ruby:2.7.2
     steps:
       - setup
   test:
     docker:
-      - image: circleci/ruby:2.6.3-node
-      - image: circleci/postgres:11.6-alpine
+      - image: circleci/ruby:2.7.2
+      - image: circleci/postgres
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: myapp_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: tabisora_test
+          POSTGRES_PASSWORD: password
     environment:
       BUNDLE_JOBS: "4"
       BUNDLE_RETRY: "3"
       PGHOST: 127.0.0.1
       PGUSER: postgres
-      PGPASSWORD: ""
+      PGPASSWORD: password
       RAILS_ENV: test
     steps:
       - setup
