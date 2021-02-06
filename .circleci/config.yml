@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: Run rspec
-          command: docker-compose run tabisora rspec
+          command: docker-compose run tabisora bash -c 'yes n | bundle exec rspec
 
   rubocop:
     working_directory: ~/tabisora
