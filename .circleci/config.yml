@@ -20,12 +20,12 @@ jobs:
       - run:
           name: Setup database
           command: |
-            docker-compose exec rake db:create
-            docker-compose exec rake db:schema:load
+            docker-compose exec tabisora rake db:create
+            docker-compose exec tabisora rake db:schema:load
 
       - run:
           name: Run rspec
-          command: docker-compose exec rspec
+          command: docker-compose exec tabisora rspec
 
   rubocop:
     working_directory: ~/tabisora
