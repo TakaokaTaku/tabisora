@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: Run rspec
-          command: docker-compose exec tabisora rspec
+          command: docker-compose run tabisora rspec
 
   rubocop:
     working_directory: ~/tabisora
