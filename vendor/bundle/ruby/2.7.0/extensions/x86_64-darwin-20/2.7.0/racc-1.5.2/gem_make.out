@@ -1,5 +1,5 @@
 current directory: /Users/takaokataku/Desktop/ruby_lesson/portfolio/tabisora/vendor/bundle/ruby/2.7.0/gems/racc-1.5.2/ext/racc/cparse
-/Users/takaokataku/.rbenv/versions/2.7.2/bin/ruby -I /Users/takaokataku/.rbenv/versions/2.7.2/lib/ruby/2.7.0 -r ./siteconf20210206-30369-m3248v.rb extconf.rb
+/Users/takaokataku/.rbenv/versions/2.7.2/bin/ruby -I /Users/takaokataku/.rbenv/versions/2.7.2/lib/ruby/2.7.0 -r ./siteconf20210206-32266-8aafvq.rb extconf.rb
 checking for rb_ary_subseq()... *** extconf.rb failed ***
 Could not create Makefile due to some reason, probably lack of necessary
 libraries and/or headers.  Check the mkmf.log file for more details.  You may
