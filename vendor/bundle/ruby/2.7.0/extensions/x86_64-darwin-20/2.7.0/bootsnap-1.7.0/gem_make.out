@@ -1,0 +1,15 @@
+current directory: /Users/takaokataku/Desktop/ruby_lesson/portfolio/tabisora/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.7.0/ext/bootsnap
+/Users/takaokataku/.rbenv/versions/2.7.2/bin/ruby -I /Users/takaokataku/.rbenv/versions/2.7.2/lib/ruby/2.7.0 -r ./siteconf20210206-33093-xvtqm4.rb extconf.rb
+creating Makefile
+
+current directory: /Users/takaokataku/Desktop/ruby_lesson/portfolio/tabisora/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.7.0/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/takaokataku/Desktop/ruby_lesson/portfolio/tabisora/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.7.0/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/takaokataku/Desktop/ruby_lesson/portfolio/tabisora/vendor/bundle/ruby/2.7.0/gems/bootsnap-1.7.0/ext/bootsnap
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20210206-33093-14gclo9/bootsnap
