@@ -78,7 +78,6 @@ jobs:
       - run:
           name: Run post-deploy tasks
           command: |
-            heroku config:set RAILS_MASTER_KEY=`cat config/master.key`
             heroku run bin/rails db:migrate
 
 orbs:

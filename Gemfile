@@ -16,10 +16,6 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'bootstrap-sass'
 gem 'devise'
-gem 'devise-i18n'
-gem 'devise-i18n-views'
-gem 'omniauth', '1.9.1'
-gem 'omniauth-facebook'
 
 gem 'pg'
 # Use Puma as the app server
