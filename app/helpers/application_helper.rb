@@ -3,7 +3,7 @@ module ApplicationHelper
     if page_title.blank?
       "TABISORA"
     else
-      "#{page_title} | #{TABISORA}"
+      "#{page_title} | TABISORA"
     end
   end
 end
