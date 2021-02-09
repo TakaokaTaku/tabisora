@@ -16,6 +16,10 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'bootstrap-sass'
 gem 'devise'
+gem "gmaps4rails"
+gem "geocoder"
+gem "gon"
+gem "dotenv-rails"
 
 gem 'pg'
 # Use Puma as the app server
