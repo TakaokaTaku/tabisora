@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true,
                    length: { maximum: 50 }
-                   
+
   has_many :trips
+  has_many :memos
 end

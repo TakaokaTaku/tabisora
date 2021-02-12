@@ -56,6 +56,10 @@ textarea {
   margin-bottom: 30px;
 }
 
+.pagination-box {
+  text-align: center;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -202,5 +206,42 @@ input {
   margin-top: 20px;
   a {
     color: black;
+  }
+}
+
+/* Trips */
+
+.trips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1%;
+  width: 100%;
+  .garally {
+    padding: 0;
+    border: 2px solid $gray-light;
+    border-radius: 2%;
+    background-color: white;
+    .check-box {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+      input {
+        margin-top: 0px;
+        transform: scale(1.5);
+        width: auto;
+      }
+    }
+    img {
+      display: block;
+      width: 100%;
+      margin: auto;
+      border-radius: 2%;
+    }
+  }
+}
+
+.modal-body {
+  img {
+    width: 100%;
   }
 }

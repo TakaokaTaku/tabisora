@@ -1,0 +1,23 @@
+<% provide(:title, "メモ") %>
+
+<%= form_with(model: @memo, remote: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :content, "メモ" %>
+  <%= f.text_area :content, placeholder: "メモを記入してください..." %>
+  <%= f.submit "メモを追加", class: "btn btn-primary btn-lg",
+                 data: { confirm: "メモの内容に間違いはありませんか？" } %>
+<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <h3>
+      (<%= @memos.count %>)
+    </h3>
+    <% if @memos.any? %>
+      <ul class="memos">
+        <%= render @memos %>
+      </ul>
+        <%= will_paginate @memos %>
+    <% end %>
+  </div>
+</div>

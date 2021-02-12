@@ -9,5 +9,10 @@ Rails.application.routes.draw do
   get    '/contact', to: 'static_pages#contact'
 
   resources :users, only: [:show, :index]
-  resources :trips
+  resources :trips do
+    member do
+      patch 'destroy_image'
+    end
+  end
+  resources :memos, only: [:new, :create, :destroy]
 end

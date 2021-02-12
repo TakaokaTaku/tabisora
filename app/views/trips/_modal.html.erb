@@ -1,0 +1,21 @@
+<div class="modal" id="Modal-<%= image.id %>" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body modal-close">
+        <%= image_tag(image) %>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-lg modal-close" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- javascriptを切り分けるとうまく動かない -->
+<script type="text/javascript">
+$('.modal-close').on('click', function(e) {
+  $("#Modal-<%= image.id %>").attr('style', 'display: none !important');
+  $(".modal-backdrop").attr('style', 'display: none !important');
+  $("body").attr('style', 'overflow: auto');
+});
+</script>

@@ -1,0 +1,20 @@
+<% provide(:title, '旅行') %>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with url: trips_path, method: :get, local: true do |f| %>
+      <%= f.text_field :title %>
+      <%= f.submit "検索", class: "btn btn-lg btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<h3 class = "trips-count">
+  (<%= @trips.count %>)
+</h3>
+<div class="trips">
+  <%= render @trips %>
+</div>
+
+<div class="pagination-box">
+  <%= will_paginate %>
+</div>

@@ -1,0 +1,39 @@
+<%= @trip.title %>
+
+<%= form_with(model: @trip, remote: true) do |f| %>
+
+  <%= f.label :title, "タイトル" %>
+  <%= f.text_area :title %>
+  <%= f.label :images, "写真添付" %>
+  <%= f.file_field :images, multiple: true, accept: "image/jpeg,image/png" %>
+  <%= f.submit "投稿", class: "btn btn-primary btn-lg",
+        data: { confirm: "投稿の内容に間違いはありませんか？" } %>
+  <%= f.submit "リセット", type: :reset ,class: "reset btn btn-lg btn-warning" %>
+<% end %>
+
+<%= link_to "削除", @trip, method: :delete, class: "btn btn-danger btn-lg",
+                            data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+
+<%= form_with(model: @trip, url: {controller: 'trips', action: 'destroy_image'} , remote: true) do |f| %>
+  <%= f.submit "写真削除", class: "btn btn-danger btn-lg",
+            data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+
+  <h3 class = "trips-count">
+    (<%= @images.count %>)
+  </h3>
+  <div class="trips">
+    <% @images.each do |image| %>
+      <div class="garally" id="image-<%= image.id %>" data-toggle = "modal" data-target = "#Modal-<%= image.id %>">
+        <div class="check-box">
+          <%= f.check_box :image_ids, {multiple: true}, image.id, false %>
+        </div>
+        <%= image_tag image.variant(resize_to_fill: [320, 320]) %>
+      </div>
+      <%= render 'modal', image: image %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="pagination-box">
+  <%= will_paginate @images %>
+</div>

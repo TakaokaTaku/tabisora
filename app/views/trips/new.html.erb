@@ -1,0 +1,13 @@
+<% provide(:title, '写真投稿') %>
+
+<h1>新規作成</h1>
+
+<%= form_with(model: @trip, remote: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :title, "タイトル" %>
+  <%= f.text_area :title, placeholder: "タイトルを記入してください..." %>
+  <%= f.submit "投稿", class: "btn btn-primary btn-lg",
+        data: { confirm: "投稿の内容に間違いはありませんか？" } %>
+  <%= f.submit "リセット", type: :reset ,class: "reset btn btn-lg btn-warning" %>
+<% end %>

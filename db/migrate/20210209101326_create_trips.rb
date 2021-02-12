@@ -6,6 +6,6 @@ class CreateTrips < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_index :trips, [:created_at]
+    add_index :trips, [:user_id, :created_at]
   end
 end
