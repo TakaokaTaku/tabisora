@@ -1,9 +1,22 @@
+<% provide(:title, @trip.title) %>
+
+<% if @trip.address %>
+  <div class="detail-map">
+    <div id="map"></div>
+  </div>
+<% end %>
+
 <%= @trip.title %>
+<%= simple_format(@trip.content) %>
 
 <%= form_with(model: @trip, remote: true) do |f| %>
 
   <%= f.label :title, "タイトル" %>
-  <%= f.text_area :title %>
+  <%= f.text_field :title %>
+  <%= f.label :content, "コメント" %>
+  <%= f.text_area :content, placeholder: "コメントを記入することができます..." %>
+  <%= f.label :adress, "旅行先" %>
+  <%= f.text_field :address, placeholder: "旅行先を記入することができます..." %>
   <%= f.label :images, "写真添付" %>
   <%= f.file_field :images, multiple: true, accept: "image/jpeg,image/png" %>
   <%= f.submit "投稿", class: "btn btn-primary btn-lg",
@@ -37,3 +50,38 @@
 <div class="pagination-box">
   <%= will_paginate @images %>
 </div>
+
+
+
+
+
+<script type="text/javascript">
+  function initMap() {
+    var test ={lat: <%= @trip.latitude %>, lng: <%= @trip.longitude %>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 10,
+              center: test
+              });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    var contentString = '住所：<%= @trip.address %>';
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    var marker = new google.maps.Marker({
+                  position: test,
+                  map: map,
+                  title: contentString
+                 });
+
+     marker.addListener('click', function() {
+       infowindow.open(map, marker);
+     });
+  }
+</script>
+
+<script async defer
+              src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+</script>

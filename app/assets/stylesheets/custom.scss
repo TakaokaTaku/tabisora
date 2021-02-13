@@ -245,3 +245,19 @@ input {
     width: 100%;
   }
 }
+
+/* Map */
+
+.detail-map {
+  #map {
+    height: 300px;
+    width: 100%;
+  }
+}
+
+.large-map {
+  #map {
+    height: 500px;
+    width: 100%;
+  }
+}

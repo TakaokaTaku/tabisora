@@ -1,8 +1,14 @@
 <% provide(:title, "メモ") %>
 
+<div class="large-map">
+  <div id="map"></div>
+</div>
+
 <%= form_with(model: @memo, remote: true) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
+  <%= f.label :adress, "旅行先" %>
+  <%= f.text_field :address, placeholder: "旅行先を記入することができます..." %>
   <%= f.label :content, "メモ" %>
   <%= f.text_area :content, placeholder: "メモを記入してください..." %>
   <%= f.submit "メモを追加", class: "btn btn-primary btn-lg",
@@ -21,3 +27,42 @@
     <% end %>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  function initMap() {
+    var test ={lat: 39, lng: 138};
+    var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 5,
+              center: test
+              });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    var style = [{
+    featureType: 'all',
+    elementType: 'labels',
+    stylers: [{ visibility: 'off' }]
+  }];
+  var lopanType = new google.maps.StyledMapType(style);
+  map.mapTypes.set('noText', lopanType);
+  map.setMapTypeId('noText');
+
+    <% @memos.each do |memo| %>
+    <% if memo.address %>
+    var contentString = '<%= memo.address %>';
+    var locate ={lat: <%= memo.latitude %>, lng: <%= memo.longitude %>};
+    var marker = new google.maps.Marker({
+                  position: locate,
+                  map: map,
+                  title: contentString
+                 });
+
+     <% end %>
+     <% end %>
+  }
+</script>
+
+<script async defer
+              src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+</script>

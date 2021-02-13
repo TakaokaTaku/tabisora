@@ -1,16 +1,5 @@
 class TripsController < ApplicationController
-  before_action :correct_user,   only: [:show, :create, :update, :destroy]
-
-  def index
-    if params[:title].present?
-      @trips = Trip.where('title LIKE ?', "%#{params[:title]}%")
-                   .and(Trip.where(user_id: current_user.id))
-                   .paginate(page: params[:page], per_page: 9)
-    else
-      @trips = Trip.where(user_id: current_user.id)
-                   .paginate(page: params[:page], per_page: 9)
-    end
-  end
+  before_action :correct_user,   only: [:show, :update, :destroy]
 
   def show
     @trip = Trip.find(params[:id])
@@ -40,7 +29,7 @@ class TripsController < ApplicationController
         redirect_to @trip
       end
     end
-    if @trip.update(params.require(:trip).permit(:title))
+    if @trip.update(trip_params)
       flash[:success] = "内容を変更しました。"
       redirect_to @trip
     else
@@ -72,7 +61,7 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:title, images: [])
+    params.require(:trip).permit(:title, :content, :address, images: [])
   end
 
   def correct_user

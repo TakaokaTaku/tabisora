@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+  def back_root
+    redirect_to root_url
+  end
+
   private
 
   def sign_in_required

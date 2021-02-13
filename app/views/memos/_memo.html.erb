@@ -1,5 +1,6 @@
 <li>
   <div>
+    <%= memo.address %>
     <%=simple_format(memo.content)%>
     <%= link_to "削除", memo, method: :delete,
         data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>

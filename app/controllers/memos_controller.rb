@@ -8,12 +8,12 @@ class MemosController < ApplicationController
 
   def create
     @memo = current_user.memos.build(memo_params)
+    @memos = current_user.memos.paginate(page: params[:page])
     if @memo.save
       flash[:success] = "メモを追加しました"
       redirect_to new_memo_path
     else
-      flash[:danger] = "メモの内容を記入してください"
-      redirect_to new_memo_path
+      render 'new'
     end
   end
 
@@ -26,7 +26,7 @@ class MemosController < ApplicationController
   private
 
   def memo_params
-    params.require(:memo).permit(:content)
+    params.require(:memo).permit(:content, :address)
   end
 
   def correct_user
