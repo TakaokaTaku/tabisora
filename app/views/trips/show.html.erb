@@ -1,38 +1,70 @@
 <% provide(:title, @trip.title) %>
 
-<% if @trip.address %>
+<div class="title">
+  <strong><%= @trip.title %></strong>
+</div>
+<% unless @trip.address.blank? || @trip.latitude.blank? || @trip.longitude.blank? %>
   <div class="detail-map">
     <div id="map"></div>
   </div>
 <% end %>
 
-<%= @trip.title %>
-<%= simple_format(@trip.content) %>
+<div class="content">
+  <% if @trip.content.present? %>
+    <%= simple_format(@trip.content) %>
+  <% else %>
+    <h2>
+      「編集する」より、コメントを追加することができます。
+    </h2>
+  <% end %>
+</div>
 
-<%= form_with(model: @trip, remote: true) do |f| %>
+<div class="form-open">
+  <button class="btn btn-primary btn-lg">編集する</button>
+</div>
 
-  <%= f.label :title, "タイトル" %>
-  <%= f.text_field :title %>
-  <%= f.label :content, "コメント" %>
-  <%= f.text_area :content, placeholder: "コメントを記入することができます..." %>
-  <%= f.label :adress, "旅行先" %>
-  <%= f.text_field :address, placeholder: "旅行先を記入することができます..." %>
-  <%= f.label :images, "写真添付" %>
-  <%= f.file_field :images, multiple: true, accept: "image/jpeg,image/png" %>
-  <%= f.submit "投稿", class: "btn btn-primary btn-lg",
-        data: { confirm: "投稿の内容に間違いはありませんか？" } %>
-  <%= f.submit "リセット", type: :reset ,class: "reset btn btn-lg btn-warning" %>
-<% end %>
+<div class="form-box">
+  <%= form_with(model: @trip, remote: true) do |f| %>
 
-<%= link_to "削除", @trip, method: :delete, class: "btn btn-danger btn-lg",
-                            data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, placeholder: "タイトルをを記入してください..." %>
+    <%= f.label :content, "コメント" %>
+    <%= f.text_area :content, placeholder: "コメントを記入することができます..." %>
+    <%= f.label :adress, "旅行先" %>
+    <%= f.text_field :address, placeholder: "旅行先を記入することができます..." %>
+    <%= f.label :images, "写真を追加" %>
+    <%= f.file_field :images, multiple: true, accept: "image/jpeg,image/png" %>
+    <%= f.submit "変更する", class: "btn btn-primary btn-lg",
+          data: { confirm: "変更する内容に間違いはありませんか？" } %>
+    <%= f.submit "変更内容をリセット", type: :reset ,class: "reset btn btn-lg btn-warning" %>
+  <% end %>
 
+  <%= link_to "この旅行を削除", @trip, method: :delete, class: "btn btn-danger btn-lg",
+                              data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+
+  <div class="form-close">
+    <button class="btn btn-lg">閉じる</button>
+  </div>
+</div>
+
+<% if @images.present? %>
 <%= form_with(model: @trip, url: {controller: 'trips', action: 'destroy_image'} , remote: true) do |f| %>
-  <%= f.submit "写真削除", class: "btn btn-danger btn-lg",
-            data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
 
-  <h3 class = "trips-count">
-    (<%= @images.count %>)
+  <div class="photo-delete-form">
+    <div class="btn btn-danger btn-lg">写真を削除</div>
+  </div>
+
+  <div class="photo-delete-btn">
+    <div class="btn btn-warning btn-lg photo-reset-btn">削除取り消し</div>
+    <%= f.submit "写真削除", class: "btn btn-danger btn-lg",
+              data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+    <div class="title">
+      削除する写真を、チェックボックスより選択してください。
+    </div>
+  </div>
+
+  <h3 class="trips-count">
+    写真(<%= @images.count %>)
   </h3>
   <div class="trips">
     <% @images.each do |image| %>
@@ -50,6 +82,13 @@
 <div class="pagination-box">
   <%= will_paginate @images %>
 </div>
+<% else %>
+<h2>
+  「編集する」より、写真を追加することができます。
+</h2>
+<% end %>
+
+
 
 
 
@@ -80,6 +119,42 @@
        infowindow.open(map, marker);
      });
   }
+</script>
+
+<script type="text/javascript">
+  $(function() {
+    $(".form-open").click(function() {
+      $(".form-box").css("display", "block");
+      $(".photo-delete-form").css("display", "none");
+      $(this).css("display", "none");
+    });
+
+    $(".form-close").click(function() {
+      $(".form-box").css("display", "none");
+      $(".form-open").css("display", "block");
+      $(".photo-delete-form").css("display", "block");
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(function() {
+    $(".photo-delete-form").click(function() {
+      $(".photo-delete-btn").css("display", "block");
+      $(".check-box").css("display", "block");
+      $(".form-open").css("display", "none");
+      $(".garally").attr("data-toggle", "");
+      $(this).css("display", "none");
+    });
+
+    $(".photo-reset-btn").click(function() {
+      $(".photo-delete-btn").css("display", "none");
+      $(".check-box").css("display", "none");
+      $(".photo-delete-form").css("display", "block");
+      $(".form-open").css("display", "block");
+      $(".garally").attr("data-toggle", "modal");
+    });
+  });
 </script>
 
 <script async defer

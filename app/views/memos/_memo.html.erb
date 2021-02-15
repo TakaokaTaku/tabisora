@@ -1,8 +1,10 @@
 <li>
-  <div>
+  <div class="memo">
     <%= memo.address %>
     <%=simple_format(memo.content)%>
-    <%= link_to "削除", memo, method: :delete,
-        data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+    <div class="delete">
+      <%= link_to "削除", memo, method: :delete,
+          data: { confirm: "本当に削除しても、よろしいでしょうか？" } %>
+    </div>
   </div>
 </li>

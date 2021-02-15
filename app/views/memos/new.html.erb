@@ -1,32 +1,50 @@
 <% provide(:title, "メモ") %>
 
+<h1>次はどこに行こう？</h1>
+
 <div class="large-map">
   <div id="map"></div>
 </div>
 
-<%= form_with(model: @memo, remote: true) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+<div class="form-open">
+  <button class="btn btn-primary btn-lg">メモを追加</button>
+</div>
 
-  <%= f.label :adress, "旅行先" %>
-  <%= f.text_field :address, placeholder: "旅行先を記入することができます..." %>
-  <%= f.label :content, "メモ" %>
-  <%= f.text_area :content, placeholder: "メモを記入してください..." %>
-  <%= f.submit "メモを追加", class: "btn btn-primary btn-lg",
-                 data: { confirm: "メモの内容に間違いはありませんか？" } %>
-<% end %>
+<div class="form-box">
+  <%= form_with(model: @memo, remote: true) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+
+    <%= f.label :adress, "旅行先" %>
+    <%= f.text_field :address, placeholder: "旅行先を記入することができます..." %>
+    <%= f.label :content, "内容" %>
+    <%= f.text_area :content, placeholder: "メモの内容を記入することができます..." %>
+    <%= f.submit "メモを追加", class: "btn btn-primary btn-lg",
+                   data: { confirm: "メモの内容に間違いはありませんか？" } %>
+  <% end %>
+
+  <div class="form-close">
+    <button class="btn btn-lg">閉じる</button>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <h3>
-      (<%= @memos.count %>)
+      メモ(<%= @memos.count %>)
     </h3>
     <% if @memos.any? %>
       <ul class="memos">
         <%= render @memos %>
       </ul>
         <%= will_paginate @memos %>
+    <% else %>
+    <h2>
+      行きたい場所のメモを追加しよう
+    </h2>
     <% end %>
   </div>
 </div>
+
 
 
 <script type="text/javascript">
@@ -39,17 +57,8 @@
     var transitLayer = new google.maps.TransitLayer();
     transitLayer.setMap(map);
 
-    var style = [{
-    featureType: 'all',
-    elementType: 'labels',
-    stylers: [{ visibility: 'off' }]
-  }];
-  var lopanType = new google.maps.StyledMapType(style);
-  map.mapTypes.set('noText', lopanType);
-  map.setMapTypeId('noText');
-
     <% @memos.each do |memo| %>
-    <% if memo.address %>
+    <% unless memo.address.blank? || memo.latitude.blank? || memo.longitude.blank? %>
     var contentString = '<%= memo.address %>';
     var locate ={lat: <%= memo.latitude %>, lng: <%= memo.longitude %>};
     var marker = new google.maps.Marker({
@@ -61,6 +70,20 @@
      <% end %>
      <% end %>
   }
+</script>
+
+<script type="text/javascript">
+  $(function() {
+    $(".form-open").click(function() {
+      $(".form-box").css("display", "block");
+      $(".form-open").css("display", "none");
+    });
+
+    $(".form-close").click(function() {
+      $(".form-box").css("display", "none");
+      $(".form-open").css("display", "block");
+    });
+  });
 </script>
 
 <script async defer

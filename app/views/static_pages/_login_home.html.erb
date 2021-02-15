@@ -1,14 +1,23 @@
-<% provide(:title, '旅行') %>
-
 <div class="large-map">
   <div id="map"></div>
 </div>
 
 <div class="row">
+
   <div class="col-md-6 col-md-offset-3">
+    <% unless @trips.present? %>
+      <div class="no-trips">
+        <h2>
+          旅行ページがありません。
+          <p>新規作成して、写真を管理することができます。</p>
+        </h2>
+        <%= link_to '旅行を作成する', new_trip_path, class: "btn btn-lg btn-success btn-new" %>
+      </div>
+    <% end %>
+
     <%= form_with url: root_path, method: :get, local: true do |f| %>
-      <%= f.text_field :title %>
-      <%= f.submit "検索", class: "btn btn-lg btn-primary" %>
+      <%= f.text_field :title, placeholder: "タイトルや旅行先から、旅行を検索できます..." %>
+      <%= f.submit "検索", class: "btn btn-lg btn-primary btn-search" %>
     <% end %>
   </div>
 </div>
@@ -43,7 +52,7 @@
   map.setMapTypeId('noText');
 
     <% @trips.each do |trip| %>
-    <% if trip.address %>
+    <% unless trip.address.blank? || trip.latitude.blank? || trip.longitude.blank? %>
     var contentString = '<%= trip.address %>';
     var locate ={lat: <%= trip.latitude %>, lng: <%= trip.longitude %>};
     var marker = new google.maps.Marker({

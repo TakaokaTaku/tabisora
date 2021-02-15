@@ -1,6 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Reggae+One&display=swap');
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
@@ -22,19 +22,40 @@ section {
   overflow: auto;
 }
 
-textarea {
-  resize: vertical;
-}
-
 .btn {
   width: 100%;
   margin-top: 20px;
 }
 
+.btn-search {
+  margin-top: 0px;
+}
+
+.photo-delete-btn {
+  display: none;
+}
+
 .center {
   text-align: center;
+  background-image: url(home.jpg);
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.1);
+  .content {
+    padding: 48px 60px;
+    height: 100%;
+  }
+  .btn {
+    max-width: 320px;
+  }
   h1 {
     margin-bottom: 10px;
+    font-size: 5em;
+    color: white;
+    font-family: 'Reggae One', cursive;
+  }
+  h3 {
+    color: white;
+    opacity: 0.8;
   }
 }
 
@@ -80,6 +101,10 @@ h2 {
   text-align: center;
   font-weight: normal;
   color: $gray-light;
+}
+
+h3 {
+  margin-top: 40px;
 }
 
 p {
@@ -159,6 +184,16 @@ input {
   border-radius: 4px;
 }
 
+textarea {
+  resize: vertical;
+  height: 100px;
+  border-radius: 4px;
+}
+
+.form-box {
+  display: none;
+}
+
 #error_explanation {
   display: table;
   margin: auto;
@@ -225,6 +260,7 @@ input {
       margin-top: 10px;
       margin-bottom: 10px;
       text-align: center;
+      display: none;
       input {
         margin-top: 0px;
         transform: scale(1.5);
@@ -240,13 +276,61 @@ input {
   }
 }
 
+.title {
+  margin-top: 20px;
+  margin-bottom:  20px;
+  text-align: center;
+  word-break: break-all;
+  font-size: large;
+}
+
+.content {
+  display: table;
+  margin: auto;
+  word-break: break-all;
+}
+
 .modal-body {
   img {
     width: 100%;
   }
 }
 
+/* Memo */
+
+.memos {
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+  }
+  .memo {
+    display: table;
+    .delete {
+      text-align: right;
+    }
+  }
+}
+
+.no-trips {
+  h2 {
+    margin-bottom: 0px;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  .btn {
+    margin-bottom: 50px;
+  }
+}
+
 /* Map */
+
+#map {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  border-radius: 1%;
+}
 
 .detail-map {
   #map {
@@ -259,5 +343,25 @@ input {
   #map {
     height: 500px;
     width: 100%;
+  }
+}
+
+/* example */
+
+.example {
+  display: table;
+  text-align: left;
+  margin: auto;
+  margin-top: 50px;
+  color: white;
+  padding:20px 40px;
+  background-color: #5cb85c;
+  border-radius: 6px;
+  ul {
+    padding: 0px;
+    list-style: none;
+    font-size: 17px;
+  }
+  .name {
   }
 }

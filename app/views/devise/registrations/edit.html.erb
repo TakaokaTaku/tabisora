@@ -1,6 +1,6 @@
-<% provide(:title, "プロフィール編集") %>
+<% provide(:title, "ユーザー編集") %>
 
-<h1>プロフィール編集</h1>
+<h1>ユーザー編集</h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -31,7 +31,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "プロフィールを更新する", class: "btn btn-lg btn-primary" %>
+    <%= f.submit "ユーザー情報を更新する", class: "btn btn-lg btn-primary" %>
   </div>
 <% end %>
 
