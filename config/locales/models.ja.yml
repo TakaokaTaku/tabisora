@@ -18,4 +18,5 @@ ja:
         content: コメント
         images: 写真
       memo:
+        content: 内容
         content_or_address: 旅行先または内容

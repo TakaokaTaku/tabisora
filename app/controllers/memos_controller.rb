@@ -1,4 +1,5 @@
 class MemosController < ApplicationController
+  before_action :authenticate_user!
   before_action :correct_user,   only: [:destroy]
 
   def new
@@ -30,7 +31,7 @@ class MemosController < ApplicationController
   end
 
   def correct_user
-    @memo = current_user.memos.find(params[:id])
+    @memo = current_user.memos.find_by(id: params[:id])
     redirect_to root_url if @memo.nil?
   end
 end

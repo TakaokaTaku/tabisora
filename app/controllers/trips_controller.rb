@@ -1,5 +1,6 @@
 class TripsController < ApplicationController
-  before_action :correct_user,   only: [:show, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :correct_user,       only: [:show, :update, :destroy, :destroy_image]
 
   def show
     @trip = Trip.find(params[:id])
@@ -55,7 +56,7 @@ class TripsController < ApplicationController
   def destroy
     Trip.find(params[:id]).destroy
     flash[:success] = "投稿を消去しました"
-    redirect_to trips_path
+    redirect_to root_path
   end
 
   private
