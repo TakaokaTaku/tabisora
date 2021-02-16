@@ -55,16 +55,6 @@ ActiveRecord::Schema.define(version: 2021_02_13_085126) do
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
-  create_table "spots", force: :cascade do |t|
-    t.string "address"
-    t.float "latitudo"
-    t.float "longitude"
-    t.bigint "trip_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["trip_id"], name: "index_spots_on_trip_id"
-  end
-
   create_table "trips", force: :cascade do |t|
     t.text "title"
     t.bigint "user_id"
@@ -103,6 +93,5 @@ ActiveRecord::Schema.define(version: 2021_02_13_085126) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "memos", "users"
-  add_foreign_key "spots", "trips"
   add_foreign_key "trips", "users"
 end
