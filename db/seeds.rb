@@ -30,3 +30,8 @@ end
     trip.save!
   end
 end
+
+user.memos.create!(content: '東京観光に行きたい',
+                   address: '東京')
+user.memos.create!(content: '大阪観光に行きたい',
+                   address: '大阪')

@@ -20,7 +20,7 @@ RSpec.describe "Memos", type: :request do
     it "does not add new memos when not logged in" do
       expect do
         post memos_path, params: { memo: {
-          content: "content"
+          content: "content",
         } }
       end.to change(Memo, :count).by(0)
       expect(response).to redirect_to new_user_session_path
@@ -30,7 +30,7 @@ RSpec.describe "Memos", type: :request do
       sign_in(user)
       expect do
         post memos_path, params: { memo: {
-          content: "content"
+          content: "content",
         } }
       end.to change(Memo, :count).by(1)
       get new_memo_path

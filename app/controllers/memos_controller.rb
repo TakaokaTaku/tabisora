@@ -1,10 +1,11 @@
 class MemosController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user,   only: [:destroy]
+  before_action :correct_user, only: [:destroy]
 
   def new
     @memo = current_user.memos.build
-    @memos = current_user.memos.paginate(page: params[:page])
+    @memos = current_user.memos.order("created_at DESC").
+      paginate(page: params[:page])
   end
 
   def create

@@ -1,8 +1,5 @@
 RSpec.describe Memo, type: :model do
   let(:memo) { FactoryBot.create(:memo) }
-  let!(:day_before_yesterday) { FactoryBot.create(:memo, :day_before_yesterday) }
-  let!(:now) { FactoryBot.create(:memo, :now) }
-  let!(:yesterday) { FactoryBot.create(:memo, :yesterday) }
 
   it "is valid" do
     expect(memo).to be_valid
@@ -27,9 +24,5 @@ RSpec.describe Memo, type: :model do
   it "is invalid with the long content" do
     memo.content = "a" * 201
     expect(memo).not_to be_valid
-  end
-
-  it "is sorted by latest" do
-    expect(Memo.first).to eq now
   end
 end

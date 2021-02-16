@@ -19,7 +19,7 @@ RSpec.describe "Trips", type: :request do
         let!(:other_trip) { user.trips.create(title: "hoge", address: "大阪") }
 
         context "no-searching" do
-          it "should display all trips" do
+          it "displays all trips" do
             get root_path
             expect(response.body).to include trip.title
             expect(response.body).to include other_trip.title
@@ -27,16 +27,16 @@ RSpec.describe "Trips", type: :request do
         end
 
         context "searching [f]" do
-          it "should display foo" do
+          it "displays foo" do
             get root_path, params: {
-              title: "f"
+              title: "f",
             }
             expect(response.body).to include trip.title
           end
         end
 
         context "searching [大阪]" do
-          it "should display hoge" do
+          it "displays hoge" do
             get root_path, params: {
               title: "大",
             }
@@ -81,7 +81,7 @@ RSpec.describe "Trips", type: :request do
     it "does not add new trips when not logged in" do
       expect do
         post trips_path, params: { trip: {
-          title: "title"
+          title: "title",
         } }
       end.to change(Trip, :count).by(0)
       expect(response).to redirect_to new_user_session_path
@@ -91,7 +91,7 @@ RSpec.describe "Trips", type: :request do
       sign_in(user)
       expect do
         post trips_path, params: { trip: {
-          title: "title"
+          title: "title",
         } }
       end.to change(Trip, :count).by(1)
     end
@@ -109,7 +109,7 @@ RSpec.describe "Trips", type: :request do
     it "fails edit when not correct_user" do
       sign_in(user)
       patch trip_path(other_trip), params: { trip: {
-        title: " "
+        title: " ",
       } }
       expect(response).to redirect_to root_path
     end
@@ -117,7 +117,7 @@ RSpec.describe "Trips", type: :request do
     it 'fails edit with wrong information' do
       sign_in(user)
       patch trip_path(trip), params: { trip: {
-        title: " "
+        title: " ",
       } }
       expect(trip.reload.title).to eq 'foo'
     end
@@ -125,7 +125,7 @@ RSpec.describe "Trips", type: :request do
     it 'succeeds edit with correct information' do
       sign_in(user)
       patch trip_path(trip), params: { trip: {
-        title: "hoge"
+        title: "hoge",
       } }
       expect(trip.reload.title).to eq 'hoge'
     end

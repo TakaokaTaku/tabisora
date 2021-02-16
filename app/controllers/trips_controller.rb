@@ -1,11 +1,11 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user,       only: [:show, :update, :destroy, :destroy_image]
+  before_action :correct_user, only: [:show, :update, :destroy, :destroy_image]
 
   def show
     @trip = Trip.find(params[:id])
-    @images = @trip.images.order("created_at DESC")
-                   .paginate(page: params[:page], per_page: 9)
+    @images = @trip.images.order("created_at DESC").
+      paginate(page: params[:page], per_page: 9)
   end
 
   def new
@@ -47,10 +47,10 @@ class TripsController < ApplicationController
         image.destroy
       end
       flash[:success] = "写真を削除しました。"
-      redirect_to (@trip) and return
+      redirect_to(@trip) && return
     end
     flash[:danger] = "削除する写真を選択してください。"
-    redirect_to (@trip)
+    redirect_to @trip
   end
 
   def destroy
@@ -69,5 +69,4 @@ class TripsController < ApplicationController
     @trip = current_user.trips.find_by(id: params[:id])
     redirect_to root_url if @trip.nil?
   end
-
 end
