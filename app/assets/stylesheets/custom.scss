@@ -306,9 +306,23 @@ textarea {
   word-break: break-all;
 }
 
-.modal-body {
-  img {
-    width: 100%;
+.modal-dialog {
+  max-width: inherit;
+  width: 98%;
+  height: 100%;
+  margin: auto;
+  .modal-body {
+    text-align: center;
+    background-color: black;
+    height: 100vh;
+    padding: 0;
+    line-height: 100vh;
+    img {
+      width:auto;
+      height:auto;
+      max-width:100%;
+      max-height: 100vh;
+    }
   }
 }
 
