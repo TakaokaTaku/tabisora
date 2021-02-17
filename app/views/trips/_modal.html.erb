@@ -11,11 +11,4 @@
   </div>
 </div>
 
-<!-- javascriptを切り分けるとうまく動かない -->
-<script type="text/javascript">
-$('.modal-close').on('click', function(e) {
-  $("#Modal-<%= image.id %>").attr('style', 'display: none !important');
-  $(".modal-backdrop").attr('style', 'display: none !important');
-  $("body").attr('style', 'overflow: auto');
-});
-</script>
+<%= javascript_pack_tag 'trips/modal' %>

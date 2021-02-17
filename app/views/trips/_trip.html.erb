@@ -1,6 +1,6 @@
 <button class="garally" id="trip-<%= trip.id %>">
   <%= link_to trip do %>
-    <%= trip.title %>
+    <span class="garally-title"><%= trip.title %></span>
     <%= image_tag trip.top_image, alt: "trip-image" %>
   <% end %>
 </button>

@@ -78,7 +78,10 @@ jobs:
       - run:
           name: Run post-deploy tasks
           command: |
+            heroku config:set AWS_ACCESS_KEY=ENV['AWS_ACCESS_KEY'] AWS_SECRET_KEY=ENV['AWS_SECRET_KEY'] AWS_REGION=ENV['AWS_REGION'] AWS_BUCKET=ENV['AWS_BUCKET'] GOOGLE_MAP_API_KEY=ENV['GOOGLE_MAP_API_KEY']
+            heroku pg:reset DATABASE
             heroku run bin/rails db:migrate
+            heroku run bin/rails db:seed
 
 orbs:
   build-tools: circleci/build-tools@2.7.1

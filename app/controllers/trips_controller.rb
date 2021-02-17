@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only: [:show, :update, :destroy, :destroy_image]
+  before_action :correct_user, only: [:show, :update, :destroy_image, :destroy]
 
   def show
     @trip = Trip.find(params[:id])
@@ -15,7 +15,7 @@ class TripsController < ApplicationController
   def create
     @trip = current_user.trips.build(trip_params)
     if @trip.save
-      flash[:success] = "投稿しました。"
+      flash[:success] = "作成しました。"
       redirect_to @trip
     else
       render 'new'
@@ -24,19 +24,8 @@ class TripsController < ApplicationController
 
   def update
     @trip = current_user.trips.find_by(id: params[:id])
-    if params[:trip][:images].present?
-      unless @trip.images.attach(params[:trip][:images])
-        flash[:danger] = "有効な画像形式にしてください。"
-        redirect_to @trip
-      end
-    end
-    if @trip.update(trip_params)
-      flash[:success] = "内容を変更しました。"
-      redirect_to @trip
-    else
-      flash[:danger] = "100文字以内のタイトルを入力してください。"
-      redirect_to @trip
-    end
+    attach_images(@trip)
+    update_contents(@trip)
   end
 
   def destroy_image
@@ -55,7 +44,7 @@ class TripsController < ApplicationController
 
   def destroy
     Trip.find(params[:id]).destroy
-    flash[:success] = "投稿を消去しました"
+    flash[:success] = "旅行を削除しました"
     redirect_to root_path
   end
 
@@ -68,5 +57,24 @@ class TripsController < ApplicationController
   def correct_user
     @trip = current_user.trips.find_by(id: params[:id])
     redirect_to root_url if @trip.nil?
+  end
+
+  def attach_images(trip)
+    if params[:trip][:images].present?
+      unless trip.images.attach(params[:trip][:images])
+        flash[:danger] = "有効な画像形式にしてください。"
+        redirect_to trip
+      end
+    end
+  end
+
+  def update_contents(trip)
+    if trip.update(trip_params)
+      flash[:success] = "内容を変更しました。"
+      redirect_to trip
+    else
+      flash[:danger] = "100文字以内のタイトルを入力してください。"
+      redirect_to trip
+    end
   end
 end

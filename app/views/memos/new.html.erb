@@ -7,6 +7,8 @@
 </div>
 
 <div class="form-open">
+  <%= link_to "Google マップへ移動する", 'https://www.google.co.jp/maps',
+              class: "btn btn-lg btn-success", target: "_blank", rel: "noopener noreferrer" %>
   <button class="btn btn-primary btn-lg">メモを追加</button>
 </div>
 
@@ -45,47 +47,5 @@
   </div>
 </div>
 
-
-
-<script type="text/javascript">
-  function initMap() {
-    var test ={lat: 39, lng: 138};
-    var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 5,
-              center: test
-              });
-    var transitLayer = new google.maps.TransitLayer();
-    transitLayer.setMap(map);
-
-    <% @memos.each do |memo| %>
-    <% unless memo.address.blank? || memo.latitude.blank? || memo.longitude.blank? %>
-    var contentString = '<%= memo.address %>';
-    var locate ={lat: <%= memo.latitude %>, lng: <%= memo.longitude %>};
-    var marker = new google.maps.Marker({
-                  position: locate,
-                  map: map,
-                  title: contentString
-                 });
-
-     <% end %>
-     <% end %>
-  }
-</script>
-
-<script type="text/javascript">
-  $(function() {
-    $(".form-open").click(function() {
-      $(".form-box").css("display", "block");
-      $(".form-open").css("display", "none");
-    });
-
-    $(".form-close").click(function() {
-      $(".form-box").css("display", "none");
-      $(".form-open").css("display", "block");
-    });
-  });
-</script>
-
-<script async defer
-              src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-</script>
+<%= render 'shared/large_map', objects: @memos %>
+<%= javascript_pack_tag 'shared/form' %>

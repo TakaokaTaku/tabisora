@@ -8,7 +8,7 @@
 <%= form_with(model: @trip, remote: true) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :title, "タイトル" %>
+  <%= f.label :title, "タイトル" %>(必須)
   <%= f.text_field :title, placeholder: "タイトルを記入してください..." %>
   <%= f.label :content, "コメント" %>
   <%= f.text_area :content, placeholder: "コメントを記入することができます..." %>
