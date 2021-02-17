@@ -380,6 +380,16 @@ textarea {
   }
   .name {
   }
+  .relation {
+    background-color: #337ab7;
+    text-align: center;
+    border-radius: 6px;
+    margin-top: 50px;
+    padding:20px 0px 10px 0px;
+    a {
+      color: white;
+    }
+  }
 }
 
 /* miscellaneous */
