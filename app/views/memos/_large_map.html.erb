@@ -1,0 +1,26 @@
+<script type="text/javascript">
+  function initMap() {
+    var test ={lat: 39, lng: 138};
+    var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 5,
+              center: test
+              });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    <% objects.each do |object| %>
+      <% if object.address.present? || object.latitude.present? || object.longitude.present? %>
+        var contentString = '<%= object.address %>';
+        var locate ={lat: <%= object.latitude %>, lng: <%= object.longitude %>};
+        var marker = new google.maps.Marker({
+                     position: locate,
+                     map: map,
+                     title: contentString
+                   });
+       <% end %>
+     <% end %>
+  }
+</script>
+<script async defer
+              src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+</script>
