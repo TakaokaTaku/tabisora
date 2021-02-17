@@ -37,9 +37,6 @@ section {
 
 .center {
   text-align: center;
-  background-image: url(home.jpg);
-  background-size: cover;
-  background-color: rgba(0, 0, 0, 0.1);
   .content {
     padding: 48px 60px;
     height: 100%;
@@ -79,6 +76,22 @@ section {
 
 .pagination-box {
   text-align: center;
+}
+
+.logout-home {
+  margin-top: -60px;
+  background-image: url(home.jpg);
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.1);
+  footer {
+    margin-top: 0;
+    overflow: hidden;
+    border-top: none;
+    padding-right: 30px;
+  }
+  a {
+    color: white;
+  }
 }
 
 /* typography */
