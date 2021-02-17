@@ -78,7 +78,7 @@ jobs:
       - run:
           name: Run post-deploy tasks
           command: |
-            heroku config:set AWS_ACCESS_KEY=AWS_ACCESS_KEY AWS_SECRET_KEY=AWS_SECRET_KEY AWS_REGION=AWS_REGION AWS_BUCKET=AWS_BUCKET GOOGLE_MAP_API_KEY=GOOGLE_MAP_API_KEY
+            heroku config:set AWS_ACCESS_KEY=$AWS_ACCESS_KEY AWS_SECRET_KEY=$AWS_SECRET_KEY AWS_REGION=$AWS_REGION AWS_BUCKET=$AWS_BUCKET GOOGLE_MAP_API_KEY=$GOOGLE_MAP_API_KEY
             heroku run bin/rails db:migrate
             heroku run bin/rails db:seed
 
