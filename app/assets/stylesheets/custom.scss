@@ -83,6 +83,7 @@ section {
   background-image: url(home.jpg);
   background-size: cover;
   background-color: rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
   footer {
     margin-top: 0;
     overflow: hidden;
@@ -165,6 +166,7 @@ p {
 footer {
   margin-top: 45px;
   padding-top: 5px;
+  padding-bottom: 10px;
   border-top: 1px solid $gray-medium-light;
   a {
     color: $gray;
@@ -173,8 +175,11 @@ footer {
     }
   }
   ul {
-    float: right;
     list-style: none;
+    overflow:  auto;
+    display: table;
+    padding: inherit;
+    margin: auto;
     li {
       float: left;
       margin-left: 15px;
