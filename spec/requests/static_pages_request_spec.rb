@@ -16,9 +16,9 @@ RSpec.describe "Staticpages", type: :request do
     end
   end
 
-  describe "Get/about" do
+  describe "Get/terms" do
     it "returns success request" do
-      get about_path
+      get terms_path
       expect(response).to have_http_status(:success)
       assert_select "title", "利用規約 | TABISORA"
     end
@@ -29,6 +29,14 @@ RSpec.describe "Staticpages", type: :request do
       get contact_path
       expect(response).to have_http_status(:success)
       assert_select "title", "お問合せ | TABISORA"
+    end
+  end
+
+  describe "Get/about" do
+    it "returns success request" do
+      get about_path
+      expect(response).to have_http_status(:success)
+      assert_select "title", "旅空とは？ | TABISORA"
     end
   end
 end
