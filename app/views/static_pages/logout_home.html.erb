@@ -20,6 +20,7 @@
             ようこそ、旅空へ！
             <p>旅空は、旅行写真の管理サービスです！</p>
           </h3>
+          <p><%= link_to "旅空とは？", about_path, class: "btn btn-lg btn-success" %></p>
           <p><%= link_to "ログイン", new_user_session_path, class: "btn btn-lg btn-success" %></p>
           <p><%= link_to "新規登録", new_user_registration_path, class: "btn btn-lg btn-success" %></p>
           <%= render 'shared/example' %>

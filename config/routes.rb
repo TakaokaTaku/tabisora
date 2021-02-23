@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get    '/home',    to: 'static_pages#home'
   get    '/help',    to: 'static_pages#help'
   get    '/about',   to: 'static_pages#about'
+  get    '/terms',   to: 'static_pages#terms'
   get    '/contact', to: 'static_pages#contact'
   get    '/users',   to: 'application#back_root'
   get    '/trips',   to: 'application#back_root'
